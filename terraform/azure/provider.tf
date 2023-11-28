@@ -1,5 +1,5 @@
 provider "azurerm" {
-  features = {}
+  features {}
 }
 
 terraform {
@@ -16,4 +16,3 @@ terraform {
     key                  = "terraform.tfstate"
   }
 }
-
