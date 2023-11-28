@@ -46,18 +46,19 @@ resource "azurerm_subnet_network_security_group_association" "web" {
 
 # Public IP address for the Load Balancer
 resource "azurerm_public_ip" "web" {
-  name                = "public-ip"
+  name                = "lcs-ip"
   location            = azurerm_resource_group.web.location
   resource_group_name = azurerm_resource_group.web.name
   allocation_method   = "Static"
 }
 
 resource "azurerm_public_ip" "web_vm" {
-  name                = "public-ip-vm"
+  name                = "lcs-ip-vm"
   location            = azurerm_resource_group.web.location
   resource_group_name = azurerm_resource_group.web.name
   allocation_method   = "Dynamic"
-  domain_name_label   = "staticsite-vm"
+  # Altere o nome do DNS record para algo único
+  domain_name_label   = "seu-novo-dns-record" 
 }
 
 # Load Balancer
@@ -159,39 +160,4 @@ resource "azurerm_network_interface" "web_nic_1" {
 # Network Interface Back-end Address Pool Association
 resource "azurerm_network_interface_backend_address_pool_association" "web_nic1_association" {
   network_interface_id    = azurerm_network_interface.web_nic_1.id
-  ip_configuration_name   = "ip-configuration1"
-  backend_address_pool_id = azurerm_lb_backend_address_pool.web.id
-}
-
-# Output the IP address of the Load Balancer
-output "lb_ip_address" {
-  value = azurerm_public_ip.web.ip_address
-}
-
-# Create the second VM
-resource "azurerm_public_ip" "nic_2" {
-  name                = "public-ip-address-name2"
-  location            = azurerm_resource_group.web.location
-  resource_group_name = azurerm_resource_group.web.name
-  allocation_method   = "Static"
-}
-
-resource "azurerm_network_interface" "web_nic_2" {
-  name                = "web-nic-2"
-  location            = azurerm_resource_group.web.location
-  resource_group_name = azurerm_resource_group.web.name
-
-  ip_configuration {
-    name                          = "ip-configuration2"
-    subnet_id                     = azurerm_subnet.web.id
-    private_ip_address_allocation = "Dynamic"
-    public_ip_address_id          = azurerm_public_ip.nic_2.id
-  }
-}
-
-resource "azurerm_network_interface_backend_address_pool_association" "web_nic2_association" {
-  network_interface_id    = azurerm_network_interface.web_nic_2.id
-  ip_configuration_name   = "ip-configuration2"
-  backend_address_pool_id = azurerm_lb_backend_address_pool.web.id
-}
-
+  ip_configuration_name   = "ip
