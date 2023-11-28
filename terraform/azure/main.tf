@@ -194,3 +194,4 @@ resource "azurerm_network_interface_backend_address_pool_association" "web_nic2_
   ip_configuration_name   = "ip-configuration2"
   backend_address_pool_id = azurerm_lb_backend_address_pool.web.id
 }
+
