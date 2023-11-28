@@ -14,8 +14,13 @@ terraform {
 }
 
 provider "azurerm" {
-  features {}
+  features = {}
   skip_provider_registration = true
   use_msi                    = true
   alias                      = "cloud"
+}
+
+resource "azurerm_resource_group" "example" {
+  name     = "example-resources"
+  location = "East US"
 }
