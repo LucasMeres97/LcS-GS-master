@@ -127,7 +127,7 @@ data "template_file" "user_data" {
 
 
 resource "aws_launch_template" "lt" {
-  name                   = "ltemplate-nader"
+  name                   = "ltemplate-lusca"
   image_id               = "ami-02e136e904f3da870"
   instance_type          = "t2.micro"
   key_name               = "vockey"
@@ -139,14 +139,14 @@ resource "aws_launch_template" "lt" {
 # LOAD BALANCER 
 
 resource "aws_lb" "lb" {
-  name               = "lb-nader"
+  name               = "lb-lusca"
   load_balancer_type = "application"
   subnets            = [aws_subnet.sn1.id, aws_subnet.sn2.id]
   security_groups    = [aws_security_group.sg.id]
 }
 
 resource "aws_lb_target_group" "tg" {
-  name     = "tg-nader"
+  name     = "tg-lusca"
   protocol = "HTTP"
   port     = "80"
   vpc_id   = aws_vpc.vpc.id
@@ -164,7 +164,7 @@ resource "aws_lb_listener" "ec2_lb_listener" {
 }
 
 resource "aws_autoscaling_group" "asg" {
-  name                = "asg-nader"
+  name                = "asg-lusca"
   desired_capacity    = "4"
   min_size            = "2"
   max_size            = "8"
